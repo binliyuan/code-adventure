@@ -1,0 +1,88 @@
+[gd_scene format=3 uid="uid://cworldcard01"]
+
+[ext_resource type="Script" path="res://ui/main_menu/world_card.gd" id="1_wcard"]
+
+[node name="WorldCard" type="PanelContainer"]
+custom_minimum_size = Vector2(540, 280)
+script = ExtResource("1_wcard")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 2
+theme_override_constants/margin_left = 0
+theme_override_constants/margin_top = 0
+theme_override_constants/margin_right = 0
+theme_override_constants/margin_bottom = 0
+
+[node name="VBox" type="VBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+
+[node name="Thumbnail" type="TextureRect" parent="MarginContainer/VBox"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 3
+stretch_mode = 5
+expand_mode = 1
+
+[node name="InfoPanel" type="PanelContainer" parent="MarginContainer/VBox"]
+layout_mode = 2
+custom_minimum_size = Vector2(0, 100)
+
+[node name="InfoMargin" type="MarginContainer" parent="MarginContainer/VBox/InfoPanel"]
+layout_mode = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 8
+
+[node name="InfoVBox" type="VBoxContainer" parent="MarginContainer/VBox/InfoPanel/InfoMargin"]
+layout_mode = 2
+theme_override_constants/separation = 4
+
+[node name="TopRow" type="HBoxContainer" parent="MarginContainer/VBox/InfoPanel/InfoMargin/InfoVBox"]
+layout_mode = 2
+
+[node name="TitleLabel" type="Label" parent="MarginContainer/VBox/InfoPanel/InfoMargin/InfoVBox/TopRow"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 22
+text = "世界名称"
+
+[node name="StatusLabel" type="Label" parent="MarginContainer/VBox/InfoPanel/InfoMargin/InfoVBox/TopRow"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 16
+text = "开始"
+
+[node name="TaglineLabel" type="Label" parent="MarginContainer/VBox/InfoPanel/InfoMargin/InfoVBox"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 14
+theme_override_colors/font_color = Color(0.545, 0.58, 0.624, 1)
+text = "简介"
+
+[node name="ProgressRow" type="HBoxContainer" parent="MarginContainer/VBox/InfoPanel/InfoMargin/InfoVBox"]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="ProgressBar" type="ProgressBar" parent="MarginContainer/VBox/InfoPanel/InfoMargin/InfoVBox/ProgressRow"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+custom_minimum_size = Vector2(0, 16)
+max_value = 50.0
+show_percentage = false
+
+[node name="ProgressLabel" type="Label" parent="MarginContainer/VBox/InfoPanel/InfoMargin/InfoVBox/ProgressRow"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 14
+theme_override_colors/font_color = Color(0.545, 0.58, 0.624, 1)
+text = "0 / 50"
+
+[node name="LockOverlay" type="ColorRect" parent="MarginContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+color = Color(0, 0, 0, 0.5)
+mouse_filter = 2
+visible = false

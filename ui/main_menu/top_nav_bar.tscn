@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=3 uid="uid://cnavbar01"]
+
+[ext_resource type="Script" path="res://ui/main_menu/top_nav_bar.gd" id="1_navbar"]
+
+[node name="TopNavBar" type="HBoxContainer"]
+offset_right = 1920.0
+offset_bottom = 72.0
+size_flags_horizontal = 3
+script = ExtResource("1_navbar")

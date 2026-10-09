@@ -1,0 +1,171 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://worlds/cyber_citadel/levels/level_01.gd" id="1_l01"]
+
+[node name="Level01" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_l01")
+
+[node name="Background" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.051, 0.067, 0.09, 1)
+
+[node name="HSplit" type="HSplitContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+split_offset = 960
+
+[node name="LeftPanel" type="VBoxContainer" parent="HSplit"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 1.0
+theme_override_constants/separation = 0
+
+[node name="LevelHeader" type="PanelContainer" parent="HSplit/LeftPanel"]
+layout_mode = 2
+custom_minimum_size = Vector2(0, 56)
+
+[node name="HeaderMargin" type="MarginContainer" parent="HSplit/LeftPanel/LevelHeader"]
+layout_mode = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_right = 16
+
+[node name="HBox" type="HBoxContainer" parent="HSplit/LeftPanel/LevelHeader/HeaderMargin"]
+layout_mode = 2
+
+[node name="BackButton" type="Button" parent="HSplit/LeftPanel/LevelHeader/HeaderMargin/HBox"]
+unique_name_in_owner = true
+layout_mode = 2
+custom_minimum_size = Vector2(80, 0)
+text = "← 返回"
+
+[node name="LevelTitleLabel" type="Label" parent="HSplit/LeftPanel/LevelHeader/HeaderMargin/HBox"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 20
+horizontal_alignment = 1
+text = "关卡 1: 你好世界"
+
+[node name="GameViewport" type="SubViewportContainer" parent="HSplit/LeftPanel"]
+layout_mode = 2
+size_flags_vertical = 3
+stretch = true
+
+[node name="SubViewport" type="SubViewport" parent="HSplit/LeftPanel/GameViewport"]
+handle_input_locally = false
+size = Vector2i(960, 540)
+render_target_update_mode = 4
+
+[node name="GameScene" type="Node2D" parent="HSplit/LeftPanel/GameViewport/SubViewport"]
+unique_name_in_owner = true
+
+[node name="RightPanel" type="VBoxContainer" parent="HSplit"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 1.0
+theme_override_constants/separation = 0
+
+[node name="ObjectivesPanel" type="PanelContainer" parent="HSplit/RightPanel"]
+layout_mode = 2
+custom_minimum_size = Vector2(0, 80)
+
+[node name="ObjMargin" type="MarginContainer" parent="HSplit/RightPanel/ObjectivesPanel"]
+layout_mode = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 8
+
+[node name="ObjVBox" type="VBoxContainer" parent="HSplit/RightPanel/ObjectivesPanel/ObjMargin"]
+layout_mode = 2
+theme_override_constants/separation = 4
+
+[node name="ObjTitle" type="Label" parent="HSplit/RightPanel/ObjectivesPanel/ObjMargin/ObjVBox"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 16
+theme_override_colors/font_color = Color(0.345, 0.651, 1.0, 1)
+text = "目标:"
+
+[node name="ObjectiveList" type="VBoxContainer" parent="HSplit/RightPanel/ObjectivesPanel/ObjMargin/ObjVBox"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/separation = 2
+
+[node name="CodeEdit" type="CodeEdit" parent="HSplit/RightPanel"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 3
+text = "# 在这里写你的代码
+"
+gutters_draw_line_numbers = true
+
+[node name="ButtonBar" type="HBoxContainer" parent="HSplit/RightPanel"]
+layout_mode = 2
+custom_minimum_size = Vector2(0, 48)
+theme_override_constants/separation = 12
+alignment = 1
+
+[node name="RunButton" type="Button" parent="HSplit/RightPanel/ButtonBar"]
+unique_name_in_owner = true
+layout_mode = 2
+custom_minimum_size = Vector2(120, 40)
+text = "▶ 运行"
+
+[node name="ResetButton" type="Button" parent="HSplit/RightPanel/ButtonBar"]
+unique_name_in_owner = true
+layout_mode = 2
+custom_minimum_size = Vector2(120, 40)
+text = "↺ 重置"
+
+[node name="HintButton" type="Button" parent="HSplit/RightPanel/ButtonBar"]
+unique_name_in_owner = true
+layout_mode = 2
+custom_minimum_size = Vector2(120, 40)
+text = "💡 提示"
+
+[node name="ConsoleSep" type="HSeparator" parent="HSplit/RightPanel"]
+layout_mode = 2
+theme_override_colors/separator_color = Color(0.188, 0.212, 0.239, 1)
+
+[node name="ConsolePanel" type="PanelContainer" parent="HSplit/RightPanel"]
+layout_mode = 2
+custom_minimum_size = Vector2(0, 150)
+
+[node name="ConsoleMargin" type="MarginContainer" parent="HSplit/RightPanel/ConsolePanel"]
+layout_mode = 2
+theme_override_constants/margin_left = 12
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 12
+theme_override_constants/margin_bottom = 8
+
+[node name="ConsoleVBox" type="VBoxContainer" parent="HSplit/RightPanel/ConsolePanel/ConsoleMargin"]
+layout_mode = 2
+theme_override_constants/separation = 4
+
+[node name="ConsoleTitle" type="Label" parent="HSplit/RightPanel/ConsolePanel/ConsoleMargin/ConsoleVBox"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 14
+theme_override_colors/font_color = Color(0.545, 0.58, 0.624, 1)
+text = "控制台输出:"
+
+[node name="Console" type="RichTextLabel" parent="HSplit/RightPanel/ConsolePanel/ConsoleMargin/ConsoleVBox"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 3
+bbcode_enabled = true
+scroll_following = true
