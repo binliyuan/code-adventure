@@ -2,12 +2,12 @@ extends LevelBase
 
 @export var lesson_id: int = 1
 
-var _lesson_data := {
-	1: {"title": "第一课 · 和电脑打招呼", "intro": "让小机器人亮起第一盏灯。", "code": "# 用 print() 和机器人打招呼\n\n", "target": "你好世界"},
-	2: {"title": "第二课 · 给信息取名字", "intro": "变量像贴在抽屉上的小标签。", "code": "# 创建一个变量，再把它打印出来\n\n", "target": "小米"},
-	3: {"title": "第三课 · 让数字动起来", "intro": "用加法帮机器人数出宝石。", "code": "# 计算 2 + 3，并打印结果\n\n", "target": "5"},
-	4: {"title": "第四课 · 拼出一句话", "intro": "把几段文字拼成一句温暖的欢迎词。", "code": "# 用 + 连接两段文字\n\n", "target": "小骑士"},
-	5: {"title": "第五课 · 完成欢迎仪式", "intro": "综合使用变量和字符串，迎接新伙伴。", "code": "# 写出完整的欢迎词\n\n", "target": "欢迎，探险家"},
+var _lesson_data: Dictionary = {
+	1: {"title": "第一关 · 抵达蓝月", "intro": "沿着星球航道前进两格，抵达蓝月空间站。", "code": "# 连续前进两格\ncoder.forward(1)\ncoder.forward(1)\n", "target": "抵达蓝月", "steps": 2, "uses_forward": true},
+	2: {"title": "第二关 · 给坐标命名", "intro": "把目的地保存成一个变量。", "code": "# 创建变量 destination，再打印它\n\n", "target": "天琴座", "steps": 0, "uses_forward": false},
+	3: {"title": "第三关 · 计算推进力", "intro": "计算能源晶体数量，让飞船加速。", "code": "# 计算 2 + 3，并打印结果\n\n", "target": "5", "steps": 0, "uses_forward": false},
+	4: {"title": "第四关 · 拼接呼叫词", "intro": "把两段讯息拼成一条完整呼叫。", "code": "# 用 + 连接两段文字\n\n", "target": "星环舰队", "steps": 0, "uses_forward": false},
+	5: {"title": "第五关 · 完成跃迁", "intro": "综合变量和字符串，发送欢迎讯息。", "code": "# 写出完整的欢迎讯息\n\n", "target": "跃迁准备完毕", "steps": 0, "uses_forward": false},
 }
 
 func _on_level_ready() -> void:
@@ -17,8 +17,8 @@ func _on_level_ready() -> void:
 	level_title = data["title"]
 	initial_code = data["code"]
 	objectives = [
-		{"text": "使用 print() 输出内容", "done": false},
-		{"text": "输出：%s" % data["target"], "done": false},
+		{"text": "执行 coder.forward(1) × %d" % int(data["steps"]) if data["uses_forward"] else "使用 print() 输出讯息", "done": false},
+		{"text": "完成目标：%s" % data["target"], "done": false},
 	]
 	_code_edit.text = initial_code
 	_level_title_label.text = level_title
@@ -26,69 +26,130 @@ func _on_level_ready() -> void:
 	_setup_game_scene(data["intro"])
 
 func _setup_game_scene(intro: String) -> void:
-	for child in _game_scene.get_children(): child.queue_free()
-	var stage := LearningStage.new()
+	for child in _game_scene.get_children():
+		child.queue_free()
+	var stage: SpaceStage = SpaceStage.new()
 	stage.lesson = lesson_id
 	stage.intro = intro
 	_game_scene.add_child(stage)
 
 func _check_objectives() -> void:
 	var data: Dictionary = _lesson_data[lesson_id]
-	var source := _code_edit.text
-	var output := _interpreter.get_output()
-	var has_target := false
-	for line: String in output:
-		if data["target"] in line:
-			has_target = true
-			break
-	objectives[0]["done"] = output.size() > 0 and "print" in source
+	var output: PackedStringArray = _interpreter.get_output()
+	var commands: Array[String] = _interpreter.get_commands()
+	var has_target: bool = false
+	if data["uses_forward"]:
+		has_target = commands.size() >= int(data["steps"])
+	else:
+		for line: String in output:
+			if str(data["target"]) in line:
+				has_target = true
+				break
+	objectives[0]["done"] = commands.size() >= int(data["steps"]) if data["uses_forward"] else output.size() > 0
 	objectives[1]["done"] = has_target
 	_render_objectives()
 	if has_target and _game_scene.get_child_count() > 0:
-		var stage := _game_scene.get_child(0)
-		if stage.has_method("celebrate"): stage.celebrate()
+		var stage: Node = _game_scene.get_child(0)
+		if stage.has_method("celebrate"):
+			stage.celebrate()
+	if not commands.is_empty() and _game_scene.get_child_count() > 0:
+		var motion_stage: Node = _game_scene.get_child(0)
+		if motion_stage.has_method("play_forward"):
+			motion_stage.play_forward(commands.size())
 
 func _on_hint_pressed() -> void:
-	var hints := {
-		1: "提示：print(\"你好世界\")",
-		2: "提示：name = \"小米\"，再写 print(name)",
-		3: "提示：先写 apples = 2 + 3，再 print(apples)",
-		4: "提示：print(\"小\" + \"骑士\")",
-		5: "提示：welcome = \"欢迎\"，name = \"探险家\"，再把它们连接起来",
+	var hints: Dictionary = {
+		1: "提示：连续写两行 coder.forward(1)，角色会沿星球航道前进两格。",
+		2: "提示：destination = \"天琴座\"，再写 print(destination)",
+		3: "提示：energy = 2 + 3，然后 print(energy)",
+		4: "提示：print(\"星环\" + \"舰队\")",
+		5: "提示：message = \"跃迁准备完毕\"，再 print(message)",
 	}
-	_console.push_color(Color("b95f48"))
+	_console.push_color(Color("70d6ff"))
 	_console.append_text(str(hints[lesson_id]) + "\n")
 	_console.pop()
 
-class LearningStage extends Node2D:
-	var lesson := 1
-	var intro := ""
-	var _celebrating := false
+class SpaceStage extends Node2D:
+	var lesson: int = 1
+	var intro: String = ""
+	var _celebrating: bool = false
+	var _planet_index: int = 0
+	var _robot_position: Vector2 = Vector2(140, 420)
+	var _route: Array[Vector2] = [Vector2(140, 420), Vector2(315, 420), Vector2(490, 315), Vector2(665, 210), Vector2(825, 115)]
+	var _planet_names: Array[String] = ["星环站", "曙光星", "信标星", "蓝月", "终点站"]
+	var _goal_index: int = 2
 
 	func _ready() -> void:
+		_goal_index = 2 if lesson == 1 else _route.size() - 1
+		queue_redraw()
+
+	func _process(_delta: float) -> void:
 		queue_redraw()
 
 	func celebrate() -> void:
 		_celebrating = true
 		queue_redraw()
 
+	func play_forward(amount: int) -> void:
+		var target_index: int = mini(_route.size() - 1, _planet_index + amount)
+		if target_index <= _planet_index:
+			return
+		var target_position: Vector2 = _route[target_index]
+		var start_position: Vector2 = _robot_position
+		_planet_index = target_index
+		_celebrating = target_index >= _goal_index
+		var motion: Tween = create_tween()
+		motion.set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
+		motion.tween_method(_set_robot_position, start_position, target_position, 0.65)
+
+	func _set_robot_position(value: Vector2) -> void:
+		_robot_position = value
+		queue_redraw()
+
+	func reset_motion() -> void:
+		_planet_index = 0
+		_robot_position = _route[0]
+		_celebrating = false
+		queue_redraw()
+
 	func _draw() -> void:
-		draw_rect(Rect2(0, 0, 960, 540), Color("fff5ea"))
-		for x in range(0, 960, 48): draw_line(Vector2(x, 0), Vector2(x, 540), Color("f4e4d7"), 1.0)
-		for y in range(0, 540, 48): draw_line(Vector2(0, y), Vector2(960, y), Color("f4e4d7"), 1.0)
-		draw_circle(Vector2(760, 100), 56, Color("ffe9c9"))
-		draw_circle(Vector2(760, 100), 40, Color("f8cf9e"))
-		draw_string(ThemeDB.fallback_font, Vector2(36, 52), "暖光编程岛  ·  第 %d 课" % lesson, HORIZONTAL_ALIGNMENT_LEFT, -1, 22, Color("8b6758"))
-		draw_string(ThemeDB.fallback_font, Vector2(36, 84), intro, HORIZONTAL_ALIGNMENT_LEFT, -1, 16, Color("a48778"))
-		var body := Color("d9795b") if not _celebrating else Color("6e9d72")
-		draw_circle(Vector2(250, 300), 74, Color("f4d8c2"))
-		draw_rect(Rect2(205, 250, 90, 100), body)
-		draw_circle(Vector2(228, 290), 9, Color("fff0b8"))
-		draw_circle(Vector2(272, 290), 9, Color("fff0b8"))
-		draw_line(Vector2(238, 320), Vector2(262, 320), Color("fff8f1"), 4)
-		draw_rect(Rect2(220, 350, 24, 48), body)
-		draw_rect(Rect2(256, 350, 24, 48), body)
-		draw_circle(Vector2(245, 212), 10, Color("e6b86e"))
-		draw_circle(Vector2(245, 212), 5, Color("fff8f1"))
-		draw_string(ThemeDB.fallback_font, Vector2(430, 330), "准备好了吗？", HORIZONTAL_ALIGNMENT_LEFT, -1, 28, Color("c07156"))
-		if _celebrating: draw_string(ThemeDB.fallback_font, Vector2(430, 370), "✓ 机器人学会了新本领！", HORIZONTAL_ALIGNMENT_LEFT, -1, 20, Color("6e9d72"))
+		draw_rect(Rect2(0, 0, 960, 540), Color("091a31"))
+		draw_circle(Vector2(820, 70), 130, Color("102d50"))
+		draw_circle(Vector2(820, 70), 90, Color("123e62"))
+		for x: int in range(0, 960, 48):
+			draw_line(Vector2(x, 105), Vector2(x, 540), Color("16385c"), 1.0)
+		for y: int in range(105, 540, 48):
+			draw_line(Vector2(0, y), Vector2(960, y), Color("16385c"), 1.0)
+		var stars: Array[Vector2] = [Vector2(90, 150), Vector2(380, 135), Vector2(710, 95), Vector2(900, 185)]
+		for star: Vector2 in stars:
+			draw_circle(star, 2.5, Color("b9f0ff"))
+		draw_string(ThemeDB.fallback_font, Vector2(32, 38), "STAR RING FORTRESS  //  PLANET ROUTE 01", HORIZONTAL_ALIGNMENT_LEFT, -1, 20, Color("70d6ff"))
+		draw_string(ThemeDB.fallback_font, Vector2(32, 70), intro, HORIZONTAL_ALIGNMENT_LEFT, -1, 16, Color("9eb2cf"))
+		for route_index: int in range(_route.size() - 1):
+			var route_color: Color = Color("7ee787") if route_index < _planet_index else Color("315578")
+			draw_line(_route[route_index], _route[route_index + 1], route_color, 7.0, true)
+			draw_line(_route[route_index], _route[route_index + 1], Color("70d6ff", 0.28), 14.0, true)
+		for planet_index: int in range(_route.size()):
+			var planet_position: Vector2 = _route[planet_index]
+			var reached: bool = planet_index <= _planet_index
+			var planet_color: Color = Color("7ee787") if reached else Color("70d6ff")
+			draw_circle(planet_position, 34.0, Color("071225"))
+			draw_circle(planet_position, 27.0, planet_color)
+			draw_circle(planet_position + Vector2(-8, -8), 8.0, Color("d8f6ff", 0.75))
+			draw_arc(planet_position, 38.0, -0.4, 2.6, 32, Color("b9f0ff", 0.65), 3.0)
+			draw_string(ThemeDB.fallback_font, planet_position + Vector2(-34, 58), _planet_names[planet_index], HORIZONTAL_ALIGNMENT_CENTER, 68, 14, Color("e8f1ff"))
+		if _celebrating:
+			draw_circle(_robot_position, 45.0, Color("70d6ff", 0.16))
+		for trail_index: int in range(1, 4):
+			draw_line(_robot_position + Vector2(-trail_index * 15, 10), _robot_position + Vector2(-trail_index * 15 - 12, 10), Color("70d6ff", 0.28), 5.0)
+		draw_circle(_robot_position + Vector2(0, -24), 20.0, Color("e8f1ff"))
+		draw_circle(_robot_position + Vector2(0, -24), 16.0, Color("123657"))
+		draw_rect(Rect2(_robot_position + Vector2(-20, -2), Vector2(40, 38)), Color("e8f1ff"))
+		draw_rect(Rect2(_robot_position + Vector2(-17, 0), Vector2(34, 31)), Color("1c4264"), false, 2.0)
+		draw_circle(_robot_position + Vector2(-6, -24), 3.0, Color("70d6ff"))
+		draw_circle(_robot_position + Vector2(6, -24), 3.0, Color("70d6ff"))
+		draw_rect(Rect2(_robot_position + Vector2(-15, 34), Vector2(12, 18)), Color("70d6ff"))
+		draw_rect(Rect2(_robot_position + Vector2(3, 34), Vector2(12, 18)), Color("70d6ff"))
+		draw_string(ThemeDB.fallback_font, Vector2(32, 505), "航道进度  %d / %d" % [_planet_index, _goal_index], HORIZONTAL_ALIGNMENT_LEFT, -1, 16, Color("9eb2cf"))
+		if _celebrating:
+			draw_string(ThemeDB.fallback_font, Vector2(590, 505), "✓ 已抵达蓝月空间站", HORIZONTAL_ALIGNMENT_LEFT, -1, 18, Color("7ee787"))

@@ -18,7 +18,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-color = Color(1, 0.973, 0.945, 1)
+color = Color(0.027, 0.071, 0.145, 1)
 
 [node name="HSplit" type="HSplitContainer" parent="."]
 layout_mode = 1
@@ -59,7 +59,7 @@ layout_mode = 2
 size_flags_horizontal = 3
 theme_override_font_sizes/font_size = 20
 horizontal_alignment = 1
-text = "关卡 1: 你好世界"
+text = "起航 · 点亮主控台"
 
 [node name="GameViewport" type="SubViewportContainer" parent="HSplit/LeftPanel"]
 layout_mode = 2
@@ -98,7 +98,7 @@ theme_override_constants/separation = 4
 [node name="ObjTitle" type="Label" parent="HSplit/RightPanel/ObjectivesPanel/ObjMargin/ObjVBox"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 16
-theme_override_colors/font_color = Color(0.345, 0.651, 1.0, 1)
+theme_override_colors/font_color = Color(0.439, 0.839, 1.0, 1)
 text = "目标:"
 
 [node name="ObjectiveList" type="VBoxContainer" parent="HSplit/RightPanel/ObjectivesPanel/ObjMargin/ObjVBox"]
@@ -140,7 +140,7 @@ text = "💡 提示"
 
 [node name="ConsoleSep" type="HSeparator" parent="HSplit/RightPanel"]
 layout_mode = 2
-theme_override_colors/separator_color = Color(0.918, 0.847, 0.792, 1)
+theme_override_colors/separator_color = Color(0.141, 0.263, 0.396, 1)
 
 [node name="ConsolePanel" type="PanelContainer" parent="HSplit/RightPanel"]
 layout_mode = 2
@@ -160,7 +160,7 @@ theme_override_constants/separation = 4
 [node name="ConsoleTitle" type="Label" parent="HSplit/RightPanel/ConsolePanel/ConsoleMargin/ConsoleVBox"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 14
-theme_override_colors/font_color = Color(0.545, 0.58, 0.624, 1)
+theme_override_colors/font_color = Color(0.62, 0.698, 0.812, 1)
 text = "控制台输出:"
 
 [node name="Console" type="RichTextLabel" parent="HSplit/RightPanel/ConsolePanel/ConsoleMargin/ConsoleVBox"]

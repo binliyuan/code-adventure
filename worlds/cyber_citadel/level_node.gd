@@ -4,16 +4,16 @@ signal level_selected(index: int)
 
 enum State { COMPLETED, CURRENT, LOCKED }
 
-const COLOR_COMPLETED := Color("6e9d72")
-const COLOR_CURRENT := Color("d9795b")
-const COLOR_LOCKED := Color("c8b8ae")
-const COLOR_BG_COMPLETED := Color("e4f0e2")
-const COLOR_BG_CURRENT := Color("f9e2d3")
-const COLOR_BG_LOCKED := Color("f2e9e2")
+const COLOR_COMPLETED = Color("7ee787")
+const COLOR_CURRENT = Color("70d6ff")
+const COLOR_LOCKED = Color("365372")
+const COLOR_BG_COMPLETED = Color("163c35")
+const COLOR_BG_CURRENT = Color("123657")
+const COLOR_BG_LOCKED = Color("0e2039")
 
 var level_index: int = 0
 var state: State = State.LOCKED
-var _hover := false
+var _hover = false
 
 func setup(idx: int, s: State) -> void:
 	level_index = idx
@@ -25,8 +25,8 @@ func setup(idx: int, s: State) -> void:
 	queue_redraw()
 
 func _draw() -> void:
-	var center := size / 2.0
-	var radius := 28.0
+	var center = size / 2.0
+	var radius = 28.0
 
 	var bg_color: Color
 	var ring_color: Color
@@ -48,25 +48,25 @@ func _draw() -> void:
 	draw_circle(center, radius, bg_color)
 
 	if state == State.CURRENT:
-		var glow := ring_color
+		var glow = ring_color
 		glow.a = 0.3
 		draw_circle(center, radius + 8.0, glow)
 
-	var font := ThemeDB.fallback_font
-	var font_size := 18
+	var font = ThemeDB.fallback_font
+	var font_size = 18
 	if state == State.COMPLETED:
-		var check := "✓"
-		var ts := font.get_string_size(check, HORIZONTAL_ALIGNMENT_CENTER, -1, font_size)
+		var check = "✓"
+		var ts = font.get_string_size(check, HORIZONTAL_ALIGNMENT_CENTER, -1, font_size)
 		draw_string(font, center - ts / 2.0 + Vector2(0, ts.y * 0.35), check, HORIZONTAL_ALIGNMENT_CENTER, -1, font_size, COLOR_COMPLETED)
 	elif state == State.LOCKED:
-		var lock := "·"
-		var ts := font.get_string_size(lock, HORIZONTAL_ALIGNMENT_CENTER, -1, 14)
+		var lock = "·"
+		var ts = font.get_string_size(lock, HORIZONTAL_ALIGNMENT_CENTER, -1, 14)
 		draw_string(font, center - ts / 2.0 + Vector2(0, ts.y * 0.35), lock, HORIZONTAL_ALIGNMENT_CENTER, -1, 14, COLOR_LOCKED)
 
-	var num := str(level_index + 1)
-	var num_size := font.get_string_size(num, HORIZONTAL_ALIGNMENT_CENTER, -1, font_size)
-	var text_color := Color("493a35") if state != State.LOCKED else Color("a99a91")
-	var y_offset := num_size.y * 0.35
+	var num = str(level_index + 1)
+	var num_size = font.get_string_size(num, HORIZONTAL_ALIGNMENT_CENTER, -1, font_size)
+	var text_color = Color("e8f1ff") if state != State.LOCKED else Color("7187a3")
+	var y_offset = num_size.y * 0.35
 	if state == State.COMPLETED:
 		y_offset += 10.0
 	elif state == State.LOCKED:

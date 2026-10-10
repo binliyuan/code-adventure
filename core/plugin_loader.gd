@@ -1,22 +1,22 @@
 class_name PluginLoader
 extends RefCounted
 
-const WORLDS_PATH := "res://worlds/"
+const WORLDS_PATH = "res://worlds/"
 
 var worlds: Array[Dictionary] = []
 
 func scan_worlds() -> void:
 	worlds.clear()
-	var dir := DirAccess.open(WORLDS_PATH)
+	var dir = DirAccess.open(WORLDS_PATH)
 	if not dir:
 		push_warning("PluginLoader: cannot open %s" % WORLDS_PATH)
 		return
 	dir.list_dir_begin()
-	var folder := dir.get_next()
+	var folder = dir.get_next()
 	while folder != "":
 		if dir.current_is_dir() and not folder.begins_with("."):
-			var cfg_path := WORLDS_PATH.path_join(folder).path_join("world.cfg")
-			var world_data := _parse_world_cfg(cfg_path, folder)
+			var cfg_path = WORLDS_PATH.path_join(folder).path_join("world.cfg")
+			var world_data = _parse_world_cfg(cfg_path, folder)
 			if not world_data.is_empty():
 				worlds.append(world_data)
 		folder = dir.get_next()
@@ -26,7 +26,7 @@ func scan_worlds() -> void:
 	)
 
 func _parse_world_cfg(path: String, folder: String) -> Dictionary:
-	var config := ConfigFile.new()
+	var config = ConfigFile.new()
 	if config.load(path) != OK:
 		push_warning("PluginLoader: failed to load %s" % path)
 		return {}
