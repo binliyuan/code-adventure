@@ -15,7 +15,7 @@ func _ready() -> void:
 
 func _setup_background() -> void:
 	var bg := StyleBoxFlat.new()
-	bg.bg_color = Color("0d1117")
+	bg.bg_color = Color("fff8f1")
 	add_theme_stylebox_override("panel", bg)
 
 func _populate_worlds() -> void:
@@ -45,20 +45,20 @@ func _setup_bottom_bar() -> void:
 		btn.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 
 		var style := StyleBoxFlat.new()
-		style.bg_color = Color("161b22")
+		style.bg_color = Color("fffdf9")
 		style.set_corner_radius_all(10)
 		style.set_content_margin_all(8)
-		style.border_color = Color("30363d")
+		style.border_color = Color("ead8ca")
 		style.set_border_width_all(1)
 		btn.add_theme_stylebox_override("normal", style)
 
 		var hover: StyleBoxFlat = style.duplicate()
-		hover.border_color = Color("58a6ff")
+		hover.border_color = Color("d9795b")
 		btn.add_theme_stylebox_override("hover", hover)
 
 		btn.add_theme_font_size_override("font_size", 16)
-		btn.add_theme_color_override("font_color", Color("8b949e"))
-		btn.add_theme_color_override("font_hover_color", Color("58a6ff"))
+		btn.add_theme_color_override("font_color", Color("89776d"))
+		btn.add_theme_color_override("font_hover_color", Color("b95f48"))
 		_bottom_bar.add_child(btn)
 
 func _on_card_pressed(world_id: String) -> void:
@@ -82,7 +82,7 @@ func _show_locked_toast(world_id: String) -> void:
 	toast.text = msg
 	toast.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	toast.add_theme_font_size_override("font_size", 20)
-	toast.add_theme_color_override("font_color", Color("f0f6fc"))
+	toast.add_theme_color_override("font_color", Color("493a35"))
 	toast.anchor_left = 0.0
 	toast.anchor_right = 1.0
 	toast.anchor_bottom = 1.0
@@ -92,7 +92,9 @@ func _show_locked_toast(world_id: String) -> void:
 
 	var bg := PanelContainer.new()
 	var style := StyleBoxFlat.new()
-	style.bg_color = Color("30363d", 0.95)
+	style.bg_color = Color("fffdf9", 0.98)
+	style.border_color = Color("ead8ca")
+	style.set_border_width_all(1)
 	style.set_corner_radius_all(8)
 	style.set_content_margin_all(12)
 	bg.add_theme_stylebox_override("panel", style)

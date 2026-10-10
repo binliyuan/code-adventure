@@ -52,30 +52,30 @@ func _on_hint_pressed() -> void:
 
 class CyberBackground extends Node2D:
 	func _draw() -> void:
-		draw_rect(Rect2(0, 0, 800, 500), Color("0a0e14"))
-		var grid_color := Color("1a2030")
+		draw_rect(Rect2(0, 0, 800, 500), Color("fff5ea"))
+		var grid_color := Color("f2dfce")
 		for x: int in range(0, 800, 40):
 			draw_line(Vector2(x, 0), Vector2(x, 500), grid_color, 1.0)
 		for y: int in range(0, 500, 40):
 			draw_line(Vector2(0, y), Vector2(800, y), grid_color, 1.0)
-		draw_string(ThemeDB.fallback_font, Vector2(20, 30), "CYBER_CITADEL://LEVEL_01", HORIZONTAL_ALIGNMENT_LEFT, -1, 12, Color("30363d"))
+		draw_string(ThemeDB.fallback_font, Vector2(20, 30), "WARM_CODE://LEVEL_01", HORIZONTAL_ALIGNMENT_LEFT, -1, 12, Color("b99d8b"))
 
 
 class ConsoleProp extends Node2D:
 	var _display_text := ""
 
 	func _draw() -> void:
-		draw_rect(Rect2(-60, -50, 120, 100), Color("21262d"))
-		draw_rect(Rect2(-55, -45, 110, 70), Color("0d1117"))
-		draw_rect(Rect2(-60, -50, 120, 100), Color("30363d"), false, 2.0)
-		draw_rect(Rect2(-20, 52, 40, 8), Color("30363d"))
-		draw_rect(Rect2(-30, 60, 60, 4), Color("30363d"))
+		draw_rect(Rect2(-60, -50, 120, 100), Color("e6cbb7"))
+		draw_rect(Rect2(-55, -45, 110, 70), Color("fffdf9"))
+		draw_rect(Rect2(-60, -50, 120, 100), Color("c99679"), false, 2.0)
+		draw_rect(Rect2(-20, 52, 40, 8), Color("c99679"))
+		draw_rect(Rect2(-30, 60, 60, 4), Color("c99679"))
 
 		if _display_text.is_empty():
-			draw_string(ThemeDB.fallback_font, Vector2(-40, -10), "> _", HORIZONTAL_ALIGNMENT_LEFT, 100, 14, Color("3fb950"))
+			draw_string(ThemeDB.fallback_font, Vector2(-40, -10), "> _", HORIZONTAL_ALIGNMENT_LEFT, 100, 14, Color("6e9d72"))
 		else:
-			draw_string(ThemeDB.fallback_font, Vector2(-45, -15), "> " + _display_text, HORIZONTAL_ALIGNMENT_LEFT, 100, 12, Color("3fb950"))
-			draw_string(ThemeDB.fallback_font, Vector2(-45, 5), "✓ 成功", HORIZONTAL_ALIGNMENT_LEFT, 100, 12, Color("58a6ff"))
+			draw_string(ThemeDB.fallback_font, Vector2(-45, -15), "> " + _display_text, HORIZONTAL_ALIGNMENT_LEFT, 100, 12, Color("6e9d72"))
+			draw_string(ThemeDB.fallback_font, Vector2(-45, 5), "✓ 成功", HORIZONTAL_ALIGNMENT_LEFT, 100, 12, Color("d9795b"))
 
 	func show_text(text: String) -> void:
 		_display_text = text
@@ -84,15 +84,15 @@ class ConsoleProp extends Node2D:
 
 class HeroBot extends Node2D:
 	func _draw() -> void:
-		draw_rect(Rect2(-20, -40, 40, 50), Color("58a6ff"))
-		draw_rect(Rect2(-22, -42, 44, 54), Color("79c0ff"), false, 2.0)
-		draw_circle(Vector2(-8, -25), 4.0, Color("3fb950"))
-		draw_circle(Vector2(8, -25), 4.0, Color("3fb950"))
-		draw_rect(Rect2(-6, -15, 12, 3), Color("3fb950"))
-		draw_rect(Rect2(-15, 12, 12, 20), Color("58a6ff"))
-		draw_rect(Rect2(3, 12, 12, 20), Color("58a6ff"))
+		draw_rect(Rect2(-20, -40, 40, 50), Color("d9795b"))
+		draw_rect(Rect2(-22, -42, 44, 54), Color("e6a384"), false, 2.0)
+		draw_circle(Vector2(-8, -25), 4.0, Color("fff0b8"))
+		draw_circle(Vector2(8, -25), 4.0, Color("fff0b8"))
+		draw_rect(Rect2(-6, -15, 12, 3), Color("6e9d72"))
+		draw_rect(Rect2(-15, 12, 12, 20), Color("d9795b"))
+		draw_rect(Rect2(3, 12, 12, 20), Color("d9795b"))
 		draw_rect(Rect2(-30, -20, 10, 30), Color("484f58"))
 		draw_rect(Rect2(20, -20, 10, 30), Color("484f58"))
 		draw_circle(Vector2(-25, 12), 4.0, Color("484f58"))
 		draw_circle(Vector2(25, 12), 4.0, Color("484f58"))
-		draw_rect(Rect2(-12, -50, 24, 8), Color("d2a8ff"))
+		draw_rect(Rect2(-12, -50, 24, 8), Color("e6c27a"))

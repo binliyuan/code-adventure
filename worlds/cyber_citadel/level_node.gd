@@ -4,12 +4,12 @@ signal level_selected(index: int)
 
 enum State { COMPLETED, CURRENT, LOCKED }
 
-const COLOR_COMPLETED := Color("3fb950")
-const COLOR_CURRENT := Color("58a6ff")
-const COLOR_LOCKED := Color("484f58")
-const COLOR_BG_COMPLETED := Color("1a3a2a")
-const COLOR_BG_CURRENT := Color("1a2a3a")
-const COLOR_BG_LOCKED := Color("21262d")
+const COLOR_COMPLETED := Color("6e9d72")
+const COLOR_CURRENT := Color("d9795b")
+const COLOR_LOCKED := Color("c8b8ae")
+const COLOR_BG_COMPLETED := Color("e4f0e2")
+const COLOR_BG_CURRENT := Color("f9e2d3")
+const COLOR_BG_LOCKED := Color("f2e9e2")
 
 var level_index: int = 0
 var state: State = State.LOCKED
@@ -59,13 +59,13 @@ func _draw() -> void:
 		var ts := font.get_string_size(check, HORIZONTAL_ALIGNMENT_CENTER, -1, font_size)
 		draw_string(font, center - ts / 2.0 + Vector2(0, ts.y * 0.35), check, HORIZONTAL_ALIGNMENT_CENTER, -1, font_size, COLOR_COMPLETED)
 	elif state == State.LOCKED:
-		var lock := "🔒"
+		var lock := "·"
 		var ts := font.get_string_size(lock, HORIZONTAL_ALIGNMENT_CENTER, -1, 14)
 		draw_string(font, center - ts / 2.0 + Vector2(0, ts.y * 0.35), lock, HORIZONTAL_ALIGNMENT_CENTER, -1, 14, COLOR_LOCKED)
 
 	var num := str(level_index + 1)
 	var num_size := font.get_string_size(num, HORIZONTAL_ALIGNMENT_CENTER, -1, font_size)
-	var text_color := Color("f0f6fc") if state != State.LOCKED else Color("8b949e")
+	var text_color := Color("493a35") if state != State.LOCKED else Color("a99a91")
 	var y_offset := num_size.y * 0.35
 	if state == State.COMPLETED:
 		y_offset += 10.0

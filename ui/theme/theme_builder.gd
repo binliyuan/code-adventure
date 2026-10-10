@@ -2,17 +2,20 @@ class_name ThemeBuilder
 extends RefCounted
 
 static func build_dark_theme() -> Theme:
+	return build_warm_theme()
+
+static func build_warm_theme() -> Theme:
 	var theme := Theme.new()
 
-	var bg_color := Color("0d1117")
-	var card_color := Color("161b22")
-	var card_hover := Color("1c2333")
-	var accent_color := Color("58a6ff")
-	var success_color := Color("3fb950")
-	var locked_color := Color("8b949e")
-	var text_primary := Color("f0f6fc")
-	var text_secondary := Color("8b949e")
-	var border_color := Color("30363d")
+	var bg_color := Color("fff8f1")
+	var card_color := Color("fffdf9")
+	var card_hover := Color("fff0e2")
+	var accent_color := Color("d9795b")
+	var success_color := Color("6e9d72")
+	var locked_color := Color("a99a91")
+	var text_primary := Color("493a35")
+	var text_secondary := Color("89776d")
+	var border_color := Color("ead8ca")
 
 	# Default font size
 	theme.set_default_font_size(18)
@@ -20,12 +23,12 @@ static func build_dark_theme() -> Theme:
 	# Button
 	var btn_normal := _flat_stylebox(card_color, 12.0, border_color)
 	var btn_hover := _flat_stylebox(card_hover, 12.0, accent_color)
-	var btn_pressed := _flat_stylebox(bg_color, 12.0, accent_color)
+	var btn_pressed := _flat_stylebox(Color("f9e2d3"), 12.0, accent_color)
 	theme.set_stylebox("normal", "Button", btn_normal)
 	theme.set_stylebox("hover", "Button", btn_hover)
 	theme.set_stylebox("pressed", "Button", btn_pressed)
 	theme.set_color("font_color", "Button", text_primary)
-	theme.set_color("font_hover_color", "Button", accent_color)
+	theme.set_color("font_hover_color", "Button", Color("b95f48"))
 	theme.set_font_size("font_size", "Button", 16)
 
 	# PanelContainer
@@ -42,7 +45,7 @@ static func build_dark_theme() -> Theme:
 	theme.set_stylebox("panel", "ScrollContainer", scroll_bg)
 
 	# ProgressBar
-	var pb_bg := _flat_stylebox(Color("21262d"), 6.0)
+	var pb_bg := _flat_stylebox(Color("f2e9e2"), 6.0)
 	var pb_fill := _flat_stylebox(accent_color, 6.0)
 	theme.set_stylebox("background", "ProgressBar", pb_bg)
 	theme.set_stylebox("fill", "ProgressBar", pb_fill)

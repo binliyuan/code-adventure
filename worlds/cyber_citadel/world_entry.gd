@@ -1,7 +1,7 @@
 extends Control
 
 const LevelNodeScene := preload("res://worlds/cyber_citadel/level_node.tscn")
-const TOTAL_LEVELS := 50
+const TOTAL_LEVELS := 5
 const COLS := 5
 const NODE_SPACING_X := 140.0
 const NODE_SPACING_Y := 120.0
@@ -20,7 +20,7 @@ var _node_positions: Array[Vector2] = []
 func _ready() -> void:
 	theme = ThemeBuilder.build_dark_theme()
 	_back_btn.pressed.connect(_on_back_pressed)
-	_title_label.text = "赛博堡垒"
+	_title_label.text = "暖光编程岛"
 	_build_level_map()
 	_update_progress()
 
@@ -73,8 +73,9 @@ func _update_progress() -> void:
 	_progress_label.text = "%d/%d 已完成" % [completed, TOTAL_LEVELS]
 
 func _on_level_selected(index: int) -> void:
-	if index == 0:
-		get_tree().change_scene_to_file("res://worlds/cyber_citadel/levels/level_01.tscn")
+	var scene_path := "res://worlds/cyber_citadel/levels/level_%02d.tscn" % (index + 1)
+	if ResourceLoader.exists(scene_path):
+		get_tree().change_scene_to_file(scene_path)
 	else:
 		_show_coming_soon()
 
@@ -83,11 +84,13 @@ func _show_coming_soon() -> void:
 	toast.text = "该关卡正在开发中..."
 	toast.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	toast.add_theme_font_size_override("font_size", 20)
-	toast.add_theme_color_override("font_color", Color("f0f6fc"))
+	toast.add_theme_color_override("font_color", Color("493a35"))
 
 	var bg := PanelContainer.new()
 	var style := StyleBoxFlat.new()
-	style.bg_color = Color("30363d", 0.95)
+	style.bg_color = Color("fffdf9", 0.98)
+	style.border_color = Color("ead8ca")
+	style.set_border_width_all(1)
 	style.set_corner_radius_all(8)
 	style.set_content_margin_all(16)
 	bg.add_theme_stylebox_override("panel", style)

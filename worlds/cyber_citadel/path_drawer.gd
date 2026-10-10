@@ -11,4 +11,4 @@ func _draw() -> void:
 	for i: int in range(positions.size() - 1):
 		var from := positions[i] + offset
 		var to := positions[i + 1] + offset
-		draw_line(from, to, Color("30363d"), 3.0, true)
+		draw_line(from, to, Color("e5c9b7"), 3.0, true)

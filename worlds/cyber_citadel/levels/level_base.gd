@@ -46,35 +46,35 @@ func _setup_code_edit() -> void:
 	_code_edit.caret_blink = true
 
 	var highlighter := CodeHighlighter.new()
-	highlighter.number_color = Color("d2a8ff")
-	highlighter.symbol_color = Color("f0f6fc")
-	highlighter.function_color = Color("d2a8ff")
-	highlighter.member_variable_color = Color("79c0ff")
+	highlighter.number_color = Color("b383c7")
+	highlighter.symbol_color = Color("493a35")
+	highlighter.function_color = Color("c07156")
+	highlighter.member_variable_color = Color("6c9aa0")
 
 	var keywords := ["if", "else", "elif", "for", "while", "def", "return",
 		"and", "or", "not", "True", "False", "None", "in", "break", "continue", "pass"]
 	for kw: String in keywords:
-		highlighter.add_keyword_color(kw, Color("ff7b72"))
+		highlighter.add_keyword_color(kw, Color("bd6b62"))
 
 	var builtins := ["print", "len", "range", "input", "str", "int", "float", "type"]
 	for fn: String in builtins:
-		highlighter.add_keyword_color(fn, Color("79c0ff"))
+		highlighter.add_keyword_color(fn, Color("6c9aa0"))
 
-	highlighter.add_color_region("\"", "\"", Color("a5d6ff"))
-	highlighter.add_color_region("'", "'", Color("a5d6ff"))
-	highlighter.add_color_region("#", "", Color("8b949e"), true)
+	highlighter.add_color_region("\"", "\"", Color("9d7c47"))
+	highlighter.add_color_region("'", "'", Color("9d7c47"))
+	highlighter.add_color_region("#", "", Color("a99a91"), true)
 
 	_code_edit.syntax_highlighter = highlighter
 
 	var edit_bg := StyleBoxFlat.new()
-	edit_bg.bg_color = Color("0d1117")
+	edit_bg.bg_color = Color("fffdf9")
 	edit_bg.set_content_margin_all(12)
 	_code_edit.add_theme_stylebox_override("normal", edit_bg)
-	_code_edit.add_theme_color_override("font_color", Color("f0f6fc"))
-	_code_edit.add_theme_color_override("background_color", Color("0d1117"))
-	_code_edit.add_theme_color_override("line_number_color", Color("484f58"))
-	_code_edit.add_theme_color_override("caret_color", Color("58a6ff"))
-	_code_edit.add_theme_color_override("current_line_color", Color("161b22"))
+	_code_edit.add_theme_color_override("font_color", Color("493a35"))
+	_code_edit.add_theme_color_override("background_color", Color("fffdf9"))
+	_code_edit.add_theme_color_override("line_number_color", Color("c8b8ae"))
+	_code_edit.add_theme_color_override("caret_color", Color("d9795b"))
+	_code_edit.add_theme_color_override("current_line_color", Color("fff0e2"))
 	_code_edit.add_theme_font_size_override("font_size", 16)
 
 func _render_objectives() -> void:
@@ -91,7 +91,7 @@ func _render_objectives() -> void:
 
 func _on_run_pressed() -> void:
 	_console.clear()
-	_console.push_color(Color("8b949e"))
+	_console.push_color(Color("a99a91"))
 	_console.append_text("正在执行...\n")
 	_console.pop()
 	_interpreter.execute(_code_edit.text, _build_context())
@@ -108,10 +108,12 @@ func _on_back_pressed() -> void:
 	get_tree().change_scene_to_file("res://worlds/cyber_citadel/world_entry.tscn")
 
 func _on_hint_pressed() -> void:
-	pass
+	_console.push_color(Color("b95f48"))
+	_console.append_text("提示：先完成目标列表中的第一项，再运行代码。\n")
+	_console.pop()
 
 func _on_output_line(text: String) -> void:
-	_console.push_color(Color("f0f6fc"))
+	_console.push_color(Color("493a35"))
 	_console.append_text("> " + text + "\n")
 	_console.pop()
 
@@ -124,7 +126,7 @@ func _on_execution_finished(success: bool) -> void:
 		_on_level_complete()
 
 func _on_execution_error(line_num: int, message: String) -> void:
-	_console.push_color(Color("f85149"))
+	_console.push_color(Color("b95f48"))
 	_console.append_text("错误 (第 %d 行): %s\n" % [line_num, message])
 	_console.pop()
 
@@ -148,10 +150,10 @@ func _on_level_complete() -> void:
 func _show_victory_panel() -> void:
 	var panel := PanelContainer.new()
 	var style := StyleBoxFlat.new()
-	style.bg_color = Color("161b22", 0.95)
+	style.bg_color = Color("fffdf9", 0.98)
 	style.set_corner_radius_all(16)
 	style.set_content_margin_all(32)
-	style.border_color = Color("3fb950")
+	style.border_color = Color("6e9d72")
 	style.set_border_width_all(2)
 	panel.add_theme_stylebox_override("panel", style)
 
@@ -163,7 +165,7 @@ func _show_victory_panel() -> void:
 	title.text = "关卡完成！"
 	title.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	title.add_theme_font_size_override("font_size", 28)
-	title.add_theme_color_override("font_color", Color("3fb950"))
+	title.add_theme_color_override("font_color", Color("6e9d72"))
 	vbox.add_child(title)
 
 	var next_btn := Button.new()
@@ -191,7 +193,12 @@ func _show_victory_panel() -> void:
 	add_child(panel)
 
 func _go_next_level() -> void:
-	_on_back_pressed()
+	var next_index := level_index + 2
+	var next_scene := "res://worlds/cyber_citadel/levels/level_%02d.tscn" % next_index
+	if ResourceLoader.exists(next_scene):
+		get_tree().change_scene_to_file(next_scene)
+	else:
+		_on_back_pressed()
 
 func _build_context() -> Dictionary:
 	return {}

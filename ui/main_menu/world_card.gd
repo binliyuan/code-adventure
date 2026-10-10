@@ -30,16 +30,37 @@ func setup(data: Dictionary, unlocked: bool, completed: int) -> void:
 
 	if unlocked:
 		_status_label.text = "开始"
-		_status_label.add_theme_color_override("font_color", Color("3fb950"))
+		_status_label.add_theme_color_override("font_color", Color("6e9d72"))
 		_lock_overlay.visible = false
 	else:
 		_status_label.text = "未解锁"
-		_status_label.add_theme_color_override("font_color", Color("8b949e"))
+		_status_label.add_theme_color_override("font_color", Color("a99a91"))
 		_lock_overlay.visible = true
 
 	var thumb_path: String = data.get("thumbnail", "")
 	if thumb_path and ResourceLoader.exists(thumb_path):
 		_thumbnail.texture = load(thumb_path)
+	else:
+		_thumbnail.texture = _make_thumbnail(str(data.get("id", "")))
+
+func _make_thumbnail(world_id: String) -> Texture2D:
+	var gradient := Gradient.new()
+	var palette: Array = {
+		"cyber_citadel": [Color("f4c9a8"), Color("d9795b")],
+		"neon_desert": [Color("f7dfb0"), Color("e7a66e")],
+		"stellar_forge": [Color("d8d1eb"), Color("9b86c4")],
+		"stellar_nexus": [Color("d5e4e8"), Color("7eabb3")],
+		"underwater_metro": [Color("cde8e0"), Color("6aa69a")],
+		"neo_memphis": [Color("f2d4dc"), Color("d68ba0")],
+	}.get(world_id, [Color("f1e0d6"), Color("c99679")])
+	gradient.colors = PackedColorArray(palette)
+	var texture := GradientTexture2D.new()
+	texture.gradient = gradient
+	texture.width = 960
+	texture.height = 240
+	texture.fill_from = Vector2(0, 0)
+	texture.fill_to = Vector2(1, 1)
+	return texture
 
 func _ready() -> void:
 	mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
@@ -53,7 +74,7 @@ func _gui_input(event: InputEvent) -> void:
 func _on_mouse_entered() -> void:
 	var style := get_theme_stylebox("panel").duplicate() as StyleBoxFlat
 	if style:
-		style.border_color = Color("58a6ff") if _is_unlocked else Color("484f58")
+		style.border_color = Color("d9795b") if _is_unlocked else Color("c8b8ae")
 		style.set_border_width_all(2)
 		add_theme_stylebox_override("panel", style)
 

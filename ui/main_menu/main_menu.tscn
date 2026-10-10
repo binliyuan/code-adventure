@@ -1,9 +1,9 @@
 [gd_scene format=3 uid="uid://cmainmenu01"]
 
-[ext_resource type="Script" path="res://ui/main_menu/main_menu.gd" id="1_menu"]
+[ext_resource type="Script" uid="uid://du4owgmp60hqi" path="res://ui/main_menu/main_menu.gd" id="1_menu"]
 [ext_resource type="PackedScene" uid="uid://cnavbar01" path="res://ui/main_menu/top_nav_bar.tscn" id="2_navbar"]
 
-[node name="MainMenu" type="Control"]
+[node name="MainMenu" type="Control" unique_id=572829926]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -12,16 +12,16 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_menu")
 
-[node name="Background" type="ColorRect" parent="."]
+[node name="Background" type="ColorRect" parent="." unique_id=1415706473]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-color = Color(0.051, 0.067, 0.09, 1)
+color = Color(1, 0.973, 0.945, 1)
 
-[node name="VBox" type="VBoxContainer" parent="."]
+[node name="VBox" type="VBoxContainer" parent="." unique_id=608364907]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -30,28 +30,27 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/separation = 0
 
-[node name="TopMargin" type="MarginContainer" parent="VBox"]
+[node name="TopMargin" type="MarginContainer" parent="VBox" unique_id=1140697944]
 layout_mode = 2
 theme_override_constants/margin_left = 40
 theme_override_constants/margin_top = 16
 theme_override_constants/margin_right = 40
 theme_override_constants/margin_bottom = 16
 
-[node name="TopNavBar" parent="VBox/TopMargin" instance=ExtResource("2_navbar")]
+[node name="TopNavBar" parent="VBox/TopMargin" unique_id=1895222357 instance=ExtResource("2_navbar")]
 unique_name_in_owner = true
 layout_mode = 2
 
-[node name="Separator1" type="HSeparator" parent="VBox"]
+[node name="Separator1" type="HSeparator" parent="VBox" unique_id=1413934283]
 layout_mode = 2
-theme_override_colors/separator_color = Color(0.188, 0.212, 0.239, 1)
 theme_override_constants/separation = 2
 
-[node name="ScrollContainer" type="ScrollContainer" parent="VBox"]
+[node name="ScrollContainer" type="ScrollContainer" parent="VBox" unique_id=386071912]
 layout_mode = 2
 size_flags_vertical = 3
 horizontal_scroll_mode = 0
 
-[node name="ScrollMargin" type="MarginContainer" parent="VBox/ScrollContainer"]
+[node name="ScrollMargin" type="MarginContainer" parent="VBox/ScrollContainer" unique_id=906584747]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -60,29 +59,28 @@ theme_override_constants/margin_top = 24
 theme_override_constants/margin_right = 60
 theme_override_constants/margin_bottom = 24
 
-[node name="WorldGrid" type="GridContainer" parent="VBox/ScrollContainer/ScrollMargin"]
+[node name="WorldGrid" type="GridContainer" parent="VBox/ScrollContainer/ScrollMargin" unique_id=1595415165]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
-columns = 3
 theme_override_constants/h_separation = 24
 theme_override_constants/v_separation = 24
+columns = 3
 
-[node name="Separator2" type="HSeparator" parent="VBox"]
+[node name="Separator2" type="HSeparator" parent="VBox" unique_id=1027946261]
 layout_mode = 2
-theme_override_colors/separator_color = Color(0.188, 0.212, 0.239, 1)
 theme_override_constants/separation = 2
 
-[node name="BottomMargin" type="MarginContainer" parent="VBox"]
+[node name="BottomMargin" type="MarginContainer" parent="VBox" unique_id=451248925]
 layout_mode = 2
 theme_override_constants/margin_left = 60
 theme_override_constants/margin_top = 12
 theme_override_constants/margin_right = 60
 theme_override_constants/margin_bottom = 12
 
-[node name="BottomBar" type="HBoxContainer" parent="VBox/BottomMargin"]
+[node name="BottomBar" type="HBoxContainer" parent="VBox/BottomMargin" unique_id=1504666636]
 unique_name_in_owner = true
 layout_mode = 2
-alignment = 1
 theme_override_constants/separation = 40
+alignment = 1

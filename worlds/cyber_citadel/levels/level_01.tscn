@@ -18,7 +18,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-color = Color(0.051, 0.067, 0.09, 1)
+color = Color(1, 0.973, 0.945, 1)
 
 [node name="HSplit" type="HSplitContainer" parent="."]
 layout_mode = 1
@@ -140,7 +140,7 @@ text = "💡 提示"
 
 [node name="ConsoleSep" type="HSeparator" parent="HSplit/RightPanel"]
 layout_mode = 2
-theme_override_colors/separator_color = Color(0.188, 0.212, 0.239, 1)
+theme_override_colors/separator_color = Color(0.918, 0.847, 0.792, 1)
 
 [node name="ConsolePanel" type="PanelContainer" parent="HSplit/RightPanel"]
 layout_mode = 2
